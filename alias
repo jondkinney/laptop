@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# bootstrap some aliases
+echo "Adding some useful aliases"
+echo "alias c='clear'" >> ~/.bash_profile
+echo "alias l='ls -la'" >> ~/.bash_profile
+echo "alias ll='ls -l'" >> ~/.bash_profile
+echo "alias ..='cd ..'" >> ~/.bash_profile
+echo "alias ...='cd ../..'" >> ~/.bash_profile
+echo "alias rm_sym='find . ! -name . -prune -type l|xargs rm'" >> ~/.bash_profile
+
+echo ""
+echo ""
+echo ""
+echo ""
+echo "*************************************************************"
+echo "Please open a new shell or run this command to load the aliases\n"
+echo "*************************************************************"
+echo ""
+echo ""
+echo "source ~/.bash_profile"
+echo ""
+echo ""

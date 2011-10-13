@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Can't use $HOME, because sometimes it's not set.
+# Can't use ~, because it depends on $HOME to expand.
+# Can't use ~$(whoami) directly, because it doesn't expand inline.
+# So: write a string in which ~$(whoami) is expanded, and run it in a subshell.
+home=$(sh -c "echo ~$(whoami)")
+
+read -p "Want to generate a new SSH Key? [y/N] " f
+if ([[ "$f" == y* ]] || [[ "$f" == Y* ]]); then
+  echo "Checking for SSH key, generating one if it doesn't exist ..."
+    [[ -f $home/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
+
+  echo "Copying public key to clipboard. Paste it into your Github account ..."
+    [[ -f $home/.ssh/id_rsa.pub ]] && cat $home/.ssh/id_rsa.pub | pbcopy
+    open https://github.com/account/ssh
+else
+  echo "Not generating an SSH key"
+fi
+
+echo "Setting up directories for Babushka to script other apps to be installed"
+  sudo mkdir -p /usr/local/babushka
+  sudo chown -R $USER:staff /usr/local
+  sudo chmod -R $USER:staff /usr/local
+
+echo "Installing babushka..."  
+  bash -c "`curl babushka.me/up/hard`"
+
+echo "Setting up mbp17"
+  babushka j2fly:'mbp17' --defaults
+
+echo "Setting shell to zsh" 
+  chsh -s /bin/zsh
+
+echo ""
+echo ""
+echo ""
+echo ""
+echo "Please open a new shell (tab or window) and run the following command to setup some rubies"
+echo ""
+echo ""
+echo "****************************************************************"
+echo ""
+echo "bash -c \"\`curl https://raw.github.com/j2fly/laptop/master/ruby\`\""
+echo ""
+echo "****************************************************************"
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
